@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RegionController!{% endblock %}
+
+
+
+{% block body %}
+<div class ="container" style="width:600px;">
+<h2>Edit un region</h2>
+<div style="width:200px;">
+{{ form_start(form) }}
+{{ form_row(form.libelle) }}
+{{ form_end(form) }}
+</div>
+</div>
+{% endblock %}
+

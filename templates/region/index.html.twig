@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RegionController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Liste des regions</h1>
+
+    <ul>
+        {% for r in regions %} 
+            <li>
+            <a href = "{{ path ('region', {id: r.id })   }} " >{{ r.libelle }}</a>  &nbsp
+            <a  href = "{{ path ('del_region', {id: r.id })   }} " style ="color:#F00" onclick = 'return confirm()'>  X </a> &nbsp
+            <a  href = "{{ path ('edit_region', {id: r.id })   }} " style ="color:#0F0" >  edit </a> 
+            </li>
+        {% endfor %}
+     </ul>
+ 
+    <p> <a href = "{{ path ('add_region')   }} ">Ajouter region</a></p>
+ </div>
+{% endblock %}
