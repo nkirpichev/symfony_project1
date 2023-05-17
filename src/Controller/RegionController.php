@@ -29,7 +29,7 @@ class RegionController extends AbstractController
         $vr = $region->getVisiteurRegions(); 
         $v = [];
         foreach ($vr as $visite){
-            $v[] = $visite->getVisiteur(); //$visite->getDateVisite(); 
+            $v[] = $visite->getVisiteur();  //$visite->getDateVisite(); 
      
         }
 
