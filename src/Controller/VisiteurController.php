@@ -12,6 +12,7 @@ use App\Repository\VisiteurRepository;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 
@@ -50,14 +51,15 @@ class VisiteurController extends AbstractController
     }
              
     #[Route('/visiteur/add', name: 'add_visiteur')]
-    public function index_add(VisiteurRepository $v, Request $request): Response
+    public function index_add(VisiteurRepository $v, Request $request, ValidatorInterface $validator): Response
     {
         
         $visiteur = new Visiteur();
         $form = $this->CreateFormBuilder($visiteur)
             ->add('nom', TextType::Class,array("label" => "Nom", "required" =>true))
             ->add('prenom', TextType::Class,array("label" => "Prenom", "required" =>true))
-            ->add('tel', TextType::Class,array("label" => "Telephone", "required" =>true))
+            ->add('tel', TextType::Class,array("label" => "E-mail", "required" =>true))
+            //->add('e-mail', TextType::Class,array("label" => "E-mail", "required" =>true))
 
             ->add('valider',SubmitType::Class)
             ->add('annuler',ResetType::Class)
@@ -65,6 +67,14 @@ class VisiteurController extends AbstractController
         $form->handleRequest($request);    
 
         if($form->isSubmitted()){
+
+            $errors = $validator->validate($visiteur);
+            if (count($errors) > 0 ) 
+                return new Response($errors[0]->getMessage(),400);
+              
+                //echo $errors[0]->getMessage();
+              
+
 
             $v->save($visiteur, true);
 
@@ -96,6 +106,16 @@ class VisiteurController extends AbstractController
         ]);
 
      }
+
+     #[Route('/visiteur/del/{id<\d+>}', name: 'del_visiteur')]
+     public function index_del(VisiteurRepository $vr, Request $request, $id): Response
+     {
+     
+        $v = $vr->find($id);
+        $vr->remove($v, true);
+        return $this->redirectToRoute('app_visiteur');  
+    
+    }
 
 
     #[Route('/visiteur', name: 'app_visiteur')]

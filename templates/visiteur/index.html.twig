@@ -16,7 +16,9 @@
     <ul>
         {% for visiteur in visiteurs %} 
             <li>
-            <a href = "{{ path ('visiteur', {id: visiteur.id })   }} " >{{ visiteur.nom ~ " " ~ visiteur.prenom }} </a>
+            <a href = "{{ path ('visiteur', {id: visiteur.id })   }} " >{{ visiteur.nom ~ " " ~ visiteur.prenom }} </a>&nbsp
+            <a  href = "{{ path ('del_visiteur', {id: visiteur.id })   }} " style ="color:#F00" onclick = 'return confirm()'>  X </a> 
+
             </li>
         {% endfor %}
      </ul>

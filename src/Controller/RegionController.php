@@ -50,7 +50,7 @@ class RegionController extends AbstractController
     
                 $data = $form->getData();
                 $v_add = $data["visiteurs"];
-                $v_add = new RegionVisiteur;
+                $v_add = new VisiteurRegion;
                 $v_add ->setVisiteur();
                 $region->addVisiteurRegion($v_add);
                 $rp->save($region, true);
@@ -64,7 +64,7 @@ class RegionController extends AbstractController
 
 
         return $this->render('region/index1.html.twig', [
-            'region' => $r,'visiteurs' => $v, 'form' => $form->createView()
+            'region' => $region,'visiteurs' => $v, 'form' => $form->createView()
         ]);
     }
 
@@ -241,4 +241,16 @@ class RegionController extends AbstractController
         {
                 return $this->v;
         }
+
+            /**
+             * Set the value of r
+             *
+             * @return  self
+             */ 
+            public function setR($r)
+            {
+                        $this->r = $r;
+
+                        return $this;
+            }
 }

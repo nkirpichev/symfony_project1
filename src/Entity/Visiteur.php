@@ -6,6 +6,7 @@ use App\Repository\VisiteurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VisiteurRepository::class)]
 class Visiteur
@@ -25,6 +26,7 @@ class Visiteur
    // private Collection $regions;
 
     #[ORM\Column(length: 20)]
+    #[Assert\Email(message : ' e-mail not valid')]
     private ?string $tel = null;
 
     #[ORM\OneToMany(mappedBy: 'visiteur', targetEntity: RapportVisite::class)]
