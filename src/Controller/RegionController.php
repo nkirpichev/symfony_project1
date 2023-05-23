@@ -28,8 +28,9 @@ class RegionController extends AbstractController
         $region = $rp->find($id);
         $vr = $region->getVisiteurRegions(); 
         $v = [];
-        foreach ($vr as $visite){
-            $v[] = $visite->getVisiteur();  //$visite->getDateVisite(); 
+        foreach ($vr as $visite){(string)
+            $visiteurvisit = $visite->getVisiteur();
+            $v[] =  array($visiteurvisit, $visite->getDateVisite()->format('Y/m/d'));// 
      
         }
 

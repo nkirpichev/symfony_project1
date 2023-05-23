@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-
+use App\Entity\VisiteurRegion;
 
 
 class VisiteurController extends AbstractController
@@ -23,7 +23,7 @@ class VisiteurController extends AbstractController
     {
         
         $visteur = $doctrine->getRepository(Visiteur::Class)->find($id);
-        $regions = $visteur->getRegions();
+        $regions = $visteur->getVisiteurRegions();
         //$region = $doctrine->getRepository(Region::Class)->find(2);
     
         if(!$visteur){
@@ -42,7 +42,7 @@ class VisiteurController extends AbstractController
         }
         else {
             foreach($regions as $r) {
-                $rep = $rep.'<br>'.' '.$r->getLibelle();
+                $rep = $rep.'<br>'.' '.$r->getRegion()->getLibelle();
         
             }
         }
@@ -72,9 +72,6 @@ class VisiteurController extends AbstractController
             if (count($errors) > 0 ) 
                 return new Response($errors[0]->getMessage(),400);
               
-                //echo $errors[0]->getMessage();
-              
-
 
             $v->save($visiteur, true);
 

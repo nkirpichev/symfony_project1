@@ -15,7 +15,7 @@
     <ul>
         {% for visiteur in visiteurs %} 
             <li>
-                <a href = "{{ path ('visiteur', {id: visiteur.id })   }} " >{{ visiteur.nom ~ " " ~ visiteur.prenom }} </a>
+                <a href = "{{ path ('visiteur', {id: visiteur[0].id })   }} " >{{ visiteur[0].nom ~ " " ~ visiteur[0].prenom }}</a> {{ visiteur[1] }}
             </li>
         {% else  %} Il n'y a pas de visiteurs
         {% endfor %}
