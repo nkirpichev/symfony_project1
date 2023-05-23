@@ -17,6 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Form\RegionType;
 
@@ -39,6 +41,8 @@ class RegionController extends AbstractController
         $form = $this->CreateFormBuilder()
             ->add('visiteurs', EntityType::Class,[ "label" => "Ajouter un visiteur", 'class'=>Visiteur::class,  'expanded'=>false])
 //            ->add('visiteurs_id', ChoiceType::Class,[ 'choices' => $visiteurs , 'expanded'=>false])
+            ->add('dateVisite', DateType::Class)
+
             ->add('ajouter',SubmitType::Class)
             ->add('annuler',ResetType::Class)
             ->getForm();
@@ -51,10 +55,16 @@ class RegionController extends AbstractController
     
                 $data = $form->getData();
                 $v_add = $data["visiteurs"];
-                $v_add = new VisiteurRegion;
-                $v_add ->setVisiteur();
-                $region->addVisiteurRegion($v_add);
-                $rp->save($region, true);
+                $visiteurRegion = new VisiteurRegion;
+                $visiteurRegion->setVisiteur($v_add);
+                $visiteurRegion->setRegion($region);
+                $visiteurRegion->setDateVisite($data["dateVisite"]);
+                $visiteurRegionRep = $doctrine->getRepository(VisiteurRegion::Class);
+                $visiteurRegionRep->save($visiteurRegion,true);
+                
+                return $this->redirectToRoute('region',["id"=>$id] );
+                //$region->addVisiteurRegion($visiteurRegion);
+                //$rp->save($region, true);
                 
                 
                 //return $this->render('region/apres_addUser.html.twig', [
@@ -254,4 +264,12 @@ class RegionController extends AbstractController
 
                         return $this;
             }
+
+                /**
+                 * Get the value of visiteurRegion
+                 */ 
+                public function getVisiteurRegion()
+                {
+                                return $this->visiteurRegion;
+                }
 }
