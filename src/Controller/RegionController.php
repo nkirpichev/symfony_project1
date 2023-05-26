@@ -22,6 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Form\RegionType;
 
+#[Route('/admin')]
 class RegionController extends AbstractController
 {
     #[Route('/region/{id<\d+>}', name: 'region')]
